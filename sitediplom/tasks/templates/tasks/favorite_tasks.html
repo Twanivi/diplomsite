@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for item in favorites_task.favorites %}
+<div class="card mb-5">
+    <div class="card-body">
+        <h5 class="card-title">{{ item.title }}</h5>
+        <p class="card-text">{{ item.description|linebreaks|truncatewords:50 }}</p>
+        <div class="d-grid gap-2 col-3">
+            <a href="{{ item.get_absolute_url }}" class="btn btn-primary">Читать больше</a>
+            <a href="{% url 'update_task' item.pk %}" class="btn btn-primary">Обновить задачу</a>
+            <a href="{% url 'update_task' item.pk %}" class="btn btn-outline-danger">Удалить из избранных</a>
+        </div>
+    </div>
+    <div class="card-footer text-muted">
+        {{ item.favorites.created_at|timesince }}
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+<h1>Форма обновления задач</h1>
+
+<form action="{% url 'update_task' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ form.non_field.errors }}
+    <button type="submit" class="btn btn-primary btn-block">Обновить задачу</button>
+</form>
+{% endblock %}

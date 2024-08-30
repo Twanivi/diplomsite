@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Удаление задачи
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'delete_task' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Удалить</button>
+</form>
+{% endblock %} 
