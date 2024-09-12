@@ -35,18 +35,17 @@ class UserRegisterForm(UserCreationForm):
 class TasksForm(forms.ModelForm):
     class Meta:
         model = Tasks
-        fields = ['title', 'description', 'completed', 'priority', 'user', 'is_favorite']
+        fields = ['title', 'description', 'completed_at', 'completed', 'priority', 'user', 'is_favorite']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
             'user': forms.HiddenInput(),
-            'priority': forms.TextInput(attrs={'class': 'form-control'}),
-            'is_favorite': forms.Select(choices=Tasks.CHOICES_PRIORITY)
+            'completed_at': forms.SelectDateWidget(attrs={'class': 'form-select'}),
+            'priority': forms.Select(choices=Tasks.CHOICES_PRIORITY),
         }
 
     def clean_title(self):
         title = self.cleaned_data['title']
-        num_object = string.digits
         spec_simbols = string.punctuation
         if re.match(r'\d', title):
             raise ValidationError('Заголовок не может начинаться с цифры')
@@ -56,8 +55,27 @@ class TasksForm(forms.ModelForm):
         return title
 
     def clean_content(self):
-        content = self.cleaned_data['content']
-        len_content = len(content)
-        if len_content > 600:
-            raise ValidationError('Длина поля content не должна превышать 600 символов')
-        return content
+        description = self.cleaned_data['description']
+        len_description = len(description)
+        if len_description > 600:
+            raise ValidationError('Длина поля "description" не должна превышать 600 символов')
+        return description
+
+
+class UpdateTaskForm(forms.ModelForm):
+    class Meta:
+        model = Tasks
+        fields = ['title', 'description', 'completed_at', 'completed', 'priority', 'user', 'is_favorite']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
+            'user': forms.HiddenInput(),
+            'completed_at': forms.SelectDateWidget(attrs={'class': 'form-select'}),
+            'priority': forms.Select(choices=Tasks.CHOICES_PRIORITY),
+        }
+
+
+class AddToFavoriteForm(forms.ModelForm):
+    class Meta:
+        model = Tasks
+        fields = ['is_favorite']

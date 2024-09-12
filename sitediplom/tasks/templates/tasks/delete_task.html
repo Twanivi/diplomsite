@@ -5,9 +5,10 @@
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'delete_task' %}" method="post">
+<form action="{% url 'delete_task' task_item.slug %}" method="post">
     {% csrf_token %}
     {{ form }}
     <button type="submit">Удалить</button>
 </form>
-{% endblock %} 
+{% endblock %}
+

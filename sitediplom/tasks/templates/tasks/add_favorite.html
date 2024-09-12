@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Форма добавления задачи в избранное</h1>
+
+<form action="{% url 'add_favorites_task' task_item.slug %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ form.non_field.errors }}
+    <button type="submit" class="btn btn-primary btn-block">Добавить в избранное</button>
+</form>
+{% endblock %}

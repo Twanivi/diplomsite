@@ -3,14 +3,19 @@ from .views import *
 from django.views.decorators.cache import cache_page
 
 
+
 urlpatterns = [
+# ----------------------------tasks-------------------------
     path('', Taskslist.as_view(), name='home'),
-    path('favorite-tasks/', FavoriteTaskslist.as_view(), name='favorites_task'),
-    path('add-favorite-tasks/', AddToFavorite.as_view(), name='add-favorites_task'),
-    path('update_task/<slug:task_slug>/', UpdateTask.as_view(), name='update_task'),
+    path('update/<slug:task_slug>/', UpdateTask.as_view(), name='update_task'),
     path('delete-tasks/<slug:task_slug>/', DeleteTask.as_view(), name='delete_task'),
     path('tasks/<slug:task_slug>/', ViewTask.as_view(), name='view_task'),
     path('add-tasks/', CreateTasks.as_view(), name='add_tasks'),
+# ---------------------------------favorites----------------------------
+    path('favorite-tasks/', FavoriteTaskslist.as_view(), name='favorites_task'),
+    path('add-favorite-tasks/<slug:task_slug>/', AddToFavorite.as_view(), name='add_favorites_task'),
+    path('remove-favorite-tasks/<slug:task_slug>/', DeleteFromFavorite.as_view, name='remove_favorite_tasks'),
+# -----------------------------------------------------------------------------
     path('register/', register, name='register'),
     path('login/', auth, name='login'),
     path('logout/', user_logout, name='logout'),

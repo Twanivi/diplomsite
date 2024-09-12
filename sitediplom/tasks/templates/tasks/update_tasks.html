@@ -1,11 +1,9 @@
-{% block sidebar %}
-{% include 'inc/_sidebar.html' %}
-{% endblock %}
+{% extends 'base.html' %}
 
 {% block content %}
 <h1>Форма обновления задач</h1>
 
-<form action="{% url 'update_task' %}" method="post">
+<form action="{% url 'update_task' task_item.slug %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     {{ form.non_field.errors }}

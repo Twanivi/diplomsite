@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% for item in favorites_task.favorites %}
+{% for item in tasks.favorites %}
 <div class="card mb-5">
     <div class="card-body">
         <h5 class="card-title">{{ item.title }}</h5>
@@ -9,7 +9,12 @@
         <div class="d-grid gap-2 col-3">
             <a href="{{ item.get_absolute_url }}" class="btn btn-primary">Читать больше</a>
             <a href="{% url 'update_task' item.pk %}" class="btn btn-primary">Обновить задачу</a>
-            <a href="{% url 'update_task' item.pk %}" class="btn btn-outline-danger">Удалить из избранных</a>
+<!--            <a href="{% url 'update_task' item.pk %}" class="btn btn-outline-danger">Удалить из избранных</a>-->
+            {% if item.completed %}
+            <p class="card-text"> Задача завершена {{ item.updated_at }}</p>
+            {% else %}
+            <a href="{% url 'update_task' item.pk %}" class="btn btn-outline-success">Завершить задачу</a>
+            {% endif %}
         </div>
     </div>
     <div class="card-footer text-muted">
