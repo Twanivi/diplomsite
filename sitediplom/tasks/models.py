@@ -48,7 +48,7 @@ class FavoriteTask(models.Model):
                                   related_name='all_favorites')
     user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
     slug = models.SlugField(max_length=150, unique=True, db_index=True, verbose_name='URL', null=True)
-    is_favorite = models.BooleanField(default=False, verbose_name='Избранная')
+
 
     def __str__(self):
         return f'{self.favorites.title} - {self.user.username}'
